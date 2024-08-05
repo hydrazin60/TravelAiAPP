@@ -1,6 +1,9 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
+import { Link, useRouter } from "expo-router";
+
 const Login = () => {
+  const router = useRouter();
   return (
     <View>
       <Image
@@ -35,18 +38,20 @@ const Login = () => {
           repudiandae consequuntur aperiam id. Quidem veniam consequatur
           expedita facilis odit! hello world HYDRAZEN
         </Text>
-        <View style={styles.Button}>
+        <TouchableOpacity
+          style={styles.Button}
+          onPress={() => router.push("/auth/Signin")}
+        >
           <Text style={{ color: "#fff", textAlign: "center", fontSize: 18 }}>
-            Sign In with Google
+            Get Started
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
 };
 
 export default Login;
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
