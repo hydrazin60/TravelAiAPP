@@ -8,8 +8,8 @@ import {
 import React, { useEffect } from "react";
 import { useNavigation, useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
-// import { createUserWithEmailAndPassword } from "firebase/auth";
-// import { auth } from "../../../config/FiebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../config/FiebaseConfig";
  
 
 const Signup = () => {
@@ -19,22 +19,22 @@ const Signup = () => {
     navigation.setOptions({ headerShown: false });
   }, []);
 
-  // const onCreateAccount = () => {
-  //   createUserWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-  //       // Signed up
-  //       const user = userCredential.user;
-  //       // ...
-  //     })
-  //     .catch((error) => {
-  //       const errorCode = error.code;
-  //       const errorMessage = error.message;
-  //       console.log("errorMessage", errorMessage);
-  //       console.log("errorCode", errorCode);
+  const onCreateAccount = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("errorMessage", errorMessage);
+        console.log("errorCode", errorCode);
 
-  //       // ..
-  //     });
-  // };
+        // ..
+      });
+  };
 
   return (
     <View
