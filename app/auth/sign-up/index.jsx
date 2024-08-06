@@ -4,13 +4,14 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  ToastAndroid,
+  ScrollView,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation, useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../config/FiebaseConfig";
- 
 
 const Signup = () => {
   const navigation = useNavigation();
@@ -20,24 +21,39 @@ const Signup = () => {
   }, []);
 
   const onCreateAccount = () => {
+    if (!email || !password || !fullName) {
+      ToastAndroid.show("Please enter all the fields", ToastAndroid.BOTTOM);
+      return;
+    }
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
+        ToastAndroid.show(`Welcome back, ${fullName}!`, ToastAndroid.LONG);
+
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log("errorMessage", errorMessage);
-        console.log("errorCode", errorCode);
-
+        if (errorCode === "auth/email-already-in-use") {
+          ToastAndroid.show(
+            "User already exists. Please log in.",
+            ToastAndroid.SHORT
+          );
+        } else {
+          ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
+        }
         // ..
       });
   };
 
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [fullName, setFullName] = useState("");
   return (
-    <View
+    <ScrollView
       style={{
         padding: 20,
         paddingTop: 40,
@@ -53,11 +69,19 @@ const Signup = () => {
       </Text>
       <View style={{ marginTop: 40 }}>
         <Text style={styles.inputsectionLebal}>User Name</Text>
-        <TextInput placeholder="enter your name" style={styles.inputsection} />
+        <TextInput
+          placeholder="enter your name"
+          style={styles.inputsection}
+          onChangeText={(value) => setFullName(value)}
+        />
       </View>
       <View style={{ marginTop: 10 }}>
         <Text style={styles.inputsectionLebal}>Email</Text>
-        <TextInput placeholder="enter your email" style={styles.inputsection} />
+        <TextInput
+          placeholder="enter your email"
+          style={styles.inputsection}
+          onChangeText={(value) => setemail(value)}
+        />
       </View>
       <View style={{ marginTop: 10 }}>
         <Text style={styles.inputsectionLebal}>Password</Text>
@@ -65,9 +89,11 @@ const Signup = () => {
           placeholder="enter your password"
           style={styles.inputsection}
           secureTextEntry={true}
+          onChangeText={(value) => setpassword(value)}
         />
       </View>
       <TouchableOpacity
+        onPress={onCreateAccount}
         style={{
           backgroundColor: "#000",
           padding: 15,
@@ -95,7 +121,7 @@ const Signup = () => {
           Sign In
         </Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 
