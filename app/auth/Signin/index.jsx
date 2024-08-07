@@ -207,6 +207,7 @@ const Signin = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        router.replace("/MyTrip");
         const emailName = user.email.split("@")[0];
         ToastAndroid.show(`Welcome back, ${emailName}!`, ToastAndroid.LONG);
         // navigation.navigate("HomeScreen"); // Navigate to home screen

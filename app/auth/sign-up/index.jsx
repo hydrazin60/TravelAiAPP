@@ -30,6 +30,7 @@ const Signup = () => {
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
+        router.replace("/MyTrip");
         ToastAndroid.show(`Welcome back, ${fullName}!`, ToastAndroid.LONG);
 
         // ...
