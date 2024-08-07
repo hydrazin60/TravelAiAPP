@@ -34,7 +34,7 @@ const Login = () => {
             padding: 20,
           }}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit rem
+          Nepal ipsum dolor sit amet consectetur adipisicing elit. Sit rem
           repudiandae consequuntur aperiam id. Quidem veniam consequatur
           expedita facilis odit! hello world HYDRAZEN
         </Text>
